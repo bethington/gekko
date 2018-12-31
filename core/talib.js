@@ -1,7 +1,7 @@
 var semver = require("semver");
 var _ = require('lodash');
 
-// validate that talib is installed, if not we'll throw an excepion which will
+// validate that talib is installed, if not we'll throw an exception which will
 // prevent further loading or out outside this module
 try {
     var talib = require("talib");
@@ -36,13 +36,15 @@ var verifyParams = (methodName, params) => {
     var requiredParams = methods[methodName].requires;
 
     _.each(requiredParams, paramName => {
-        if(!_.has(params, paramName))
-            throw talibError + methodName + ' requires ' + paramName + '.';
+        if(!_.has(params, paramName)) {
+            throw new Error(talibError + methodName + ' requires ' + paramName + '.');
+        }
 
         var val = params[paramName];
 
-        if(!_.isNumber(val))
-            throw talibError + paramName + ' needs to be a number';
+        if(!_.isNumber(val)) {
+            throw new Error(talibError + paramName + ' needs to be a number');
+        }
     });
 }
 
